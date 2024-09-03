@@ -15,6 +15,7 @@ See http://scikit-learn.org for complete documentation.
 import sys
 import re
 import warnings
+import secrets
 
 
 # Make sure that DeprecationWarning within this package always gets printed
@@ -75,7 +76,6 @@ def setup_module(module):
     """Fixture for the tests to assure globally controllable seeding of RNGs"""
     import os
     import numpy as np
-    import random
 
     # It could have been provided in the environment
     _random_seed = os.environ.get('SKLEARN_SEED', None)
@@ -84,4 +84,4 @@ def setup_module(module):
     _random_seed = int(_random_seed)
     print("I: Seeding RNGs with %r" % _random_seed)
     np.random.seed(_random_seed)
-    random.seed(_random_seed)
+    secrets.SystemRandom().seed(_random_seed)
