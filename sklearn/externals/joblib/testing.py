@@ -10,6 +10,7 @@ import subprocess
 import threading
 
 from sklearn.externals.joblib._compat import PY3_OR_LATER
+from security import safe_command
 
 
 def warnings_to_stdout():
@@ -58,7 +59,7 @@ def check_subprocess_call(cmd, timeout=1, stdout_regex=None,
     Also checks returncode is zero, stdout if stdout_regex is set, and
     stderr if stderr_regex is set.
     """
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+    proc = safe_command.run(subprocess.Popen, cmd, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
 
     def kill_process():
